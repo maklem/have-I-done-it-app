@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.github.maklem.training.simplechorehelper"
+    namespace = "dev.leuchtstark.training.erledigt"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.github.maklem.training.simplechorehelper"
+        applicationId = "dev.leuchtstark.training.erledigt"
         minSdk = 26
         targetSdk = 34
         versionCode = 1
