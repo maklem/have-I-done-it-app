@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "SimpleChoreHelper"
+rootProject.name = "erledigt"
 include(":app")
  
