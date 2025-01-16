@@ -29,7 +29,5 @@ jobs:
         sudo udevadm control --reload-rules
         sudo udevadm trigger --name-match=kvm
     - name: run android tests
-      uses: reactivecircus/android-emulator-runner@v2
-      with:
-        api-level: 34
-        script: ./gradlew connectedAndroidTest
+      run: |
+        ./gradlew -Pandroid.testoptions.manageddevices.emulator.gpu=swiftshader_indirect virtualAndroidTest 
