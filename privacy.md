@@ -11,6 +11,7 @@ These will be used to understand and fix issues.
 ## Emails
 
 When you send me an email, I will receive
+
 * information you provide (including: subject, date and time, contents, your email address)
 * information added by intermediate servers (including: name/ip of sending and receiving network entity, date and time of message transfer)
 
