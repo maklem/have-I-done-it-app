@@ -12,24 +12,22 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TimePicker
+import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,35 +39,26 @@ import dev.leuchtstark.training.erledigt.ui.theme.SimpleChoreHelperTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EditScreen(
+fun EditTimeScreen(
     modifier: Modifier = Modifier,
-    onRequestTime: () -> Unit,
     onDone: ()->Unit = {},
-    viewModel: EditScreenViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    viewModel: EditScreenViewModel = viewModel(factory = AppViewModelProvider.Factory),
 ) {
     val uiState = viewModel.choreUiState
-    val onDelete = {
-        viewModel.deleteChore()
-        onDone()
-    }
 
     Scaffold (
         topBar = {
-            EditScreenTopBar(
-                uiState = uiState,
+            EditTimeScreenTopBar(
                 onCancel = onDone,
-                onDelete = onDelete,
             )
         },
         modifier = modifier,
     ){
-        EditScreenElements(
+        EditTimeScreenElements(
             uiState,
             modifier = Modifier.padding(it),
-            onNameChanged = viewModel::onNameChanged,
-            onRequestTime = onRequestTime,
-            onSave = {
-                viewModel.saveChore()
+            onSave = { hour, minute ->
+                viewModel.onSetTime(hour, minute)
                 onDone()
             },
             onCancel = onDone,
@@ -79,17 +68,9 @@ fun EditScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EditScreenTopBar(
-    uiState: EditUiState,
+fun EditTimeScreenTopBar(
     onCancel: () -> Unit = {},
-    onDelete: () -> Unit = {},
 ) {
-    val errorButtonStyle = ButtonColors(
-        containerColor = Color.Unspecified,
-        contentColor = MaterialTheme.colorScheme.error,
-        disabledContentColor = Color.Unspecified,
-        disabledContainerColor = Color.Unspecified
-    )
     CenterAlignedTopAppBar(
         title = {
             Row(
@@ -119,61 +100,46 @@ fun EditScreenTopBar(
                 )
             }
         },
-        actions = {
-            if(uiState.existsInDatabase) {
-                TextButton(
-                    modifier = Modifier.fillMaxHeight(),
-                    onClick = onDelete,
-                    colors = errorButtonStyle,
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Delete,
-                        contentDescription = stringResource(R.string.editscreen_delete_chore)
-                    )
-                }
-            }
-        }
     )
 }
 
 @Preview
 @Composable
-fun EditScreenTopBarPreview(){
+fun EditTimeScreenTopBarPreview(){
     SimpleChoreHelperTheme {
-        EditScreenTopBar(EditUiState())
+        EditTimeScreenTopBar()
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EditScreenElements(
+fun EditTimeScreenElements(
     uiState: EditUiState,
     modifier: Modifier = Modifier,
-    onNameChanged: (String) -> Unit = {},
-    onRequestTime: () -> Unit = {},
-    onSave: () -> Unit = {},
+    onSave: (hour: Int, minute: Int) -> Unit = { _, _ -> },
     onCancel: () -> Unit = {},
 ) {
     val horizontalSpace = 10.dp
     val verticalSpace = 20.dp
     Column (
         modifier = modifier.padding(horizontalSpace),
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
-        Text(text = stringResource(R.string.editscreen_remind_me_of))
-        OutlinedTextField(
-            value = uiState.name,
-            onValueChange = { onNameChanged(it) },
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true,
+        val time = rememberTimePickerState(
+            initialHour = uiState.hour.toInt(),
+            initialMinute = uiState.minute.toInt(),
+            is24Hour = true,
         )
         Spacer(modifier = Modifier.height(verticalSpace))
         Text(text = stringResource(R.string.editscreen_reminder_me_at))
-        OutlinedButton(
-            modifier=Modifier.fillMaxWidth(),
-            onClick = onRequestTime,
+        Spacer(modifier = Modifier.height(verticalSpace))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
         ) {
-            Text(
-                text = "%2d:%02d".format(uiState.hour, uiState.minute)
+            TimePicker(
+                state = time,
+                modifier = Modifier,
             )
         }
         Spacer(modifier = Modifier.height(verticalSpace))
@@ -189,7 +155,7 @@ fun EditScreenElements(
             Spacer(modifier = Modifier.width(horizontalSpace))
             Button(
                 modifier = Modifier.weight(1f),
-                onClick = onSave,
+                onClick = { onSave(time.hour, time.minute) },
             ) {
                 Text(text = stringResource(R.string.editscreen_save))
             }
@@ -200,10 +166,10 @@ fun EditScreenElements(
 
 @Preview
 @Composable
-fun DetailsScreenPreview(){
+fun EditTimeScreenPreview(){
     SimpleChoreHelperTheme {
         Surface {
-            EditScreenElements(
+            EditTimeScreenElements(
                 EditUiState(
                     name = "EditScreen",
                     hour = 3,

@@ -3,7 +3,6 @@ package dev.leuchtstark.training.erledigt.ui.chore
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.leuchtstark.training.erledigt.data.Chore
@@ -20,6 +19,7 @@ data class EditUiState(
     val name: String = "Chore",
     val hour: Long = 7,
     val minute: Long = 0,
+    val existsInDatabase: Boolean = false,
 )
 
 fun Chore.toChoreUiState(): EditUiState =
@@ -27,25 +27,31 @@ fun Chore.toChoreUiState(): EditUiState =
         name = name,
         hour = remindAtSecondOfDay / 3600,
         minute = (remindAtSecondOfDay / 60) % 60,
+        existsInDatabase = true,
     )
 
 
 class EditScreenViewModel (
-    savedStateHandle: SavedStateHandle,
     private val choreRepository: ChoreRepository,
     private val reminderRepository: ReminderRepository,
 ) : ViewModel() {
     var choreUiState by mutableStateOf( EditUiState() )
         private set
 
-    private val choreId: Int = checkNotNull(savedStateHandle["choreId.id"])
+    private var choreId: Int? = null
 
-    init {
-        viewModelScope.launch {
-            choreUiState = choreRepository.getChoreStreamById(choreId)
-                .filterNotNull()
-                .first()
-                .toChoreUiState()
+    fun reset(choreId: ChoreId?) {
+        if(choreId == null) {
+            this.choreId = null
+            choreUiState = EditUiState()
+        }else{
+            this.choreId = choreId.id
+            viewModelScope.launch {
+                choreUiState = choreRepository.getChoreStreamById(choreId.id)
+                    .filterNotNull()
+                    .first()
+                    .toChoreUiState()
+            }
         }
     }
 
@@ -53,46 +59,56 @@ class EditScreenViewModel (
         choreUiState = choreUiState.copy( name = newName )
     }
 
-    fun onIncreaseHour() {
-        choreUiState = choreUiState.copy( hour = (choreUiState.hour + 1) % 24 )
-    }
-    fun onDecreaseHour() {
-        val newHour = if(choreUiState.hour > 0) {
-            choreUiState.hour - 1
-        }else{ 23 }
-        choreUiState = choreUiState.copy( hour = newHour )
-    }
-    fun onIncreaseMinute() {
-        choreUiState = choreUiState.copy( minute = (choreUiState.minute + 1) % 60 )
-    }
-    fun onDecreaseMinute() {
-        val newMinute = if(choreUiState.minute > 0) {
-            choreUiState.minute - 1
-        }else{ 59 }
-        choreUiState = choreUiState.copy( minute = newMinute )
+    fun onSetTime(hour: Int, minute: Int) {
+        choreUiState = choreUiState.copy(
+            hour = hour.toLong(),
+            minute = minute.toLong(),
+        )
     }
 
     fun saveChore(){
-        viewModelScope.launch {
-            runBlocking {
-                choreRepository.updateChore(
-                    ChoreInformation(
-                        id = choreId,
-                        name = choreUiState.name,
-                        remindAtSecondOfDay = choreUiState.hour * 3600 + choreUiState.minute * 60,
+        if(this.choreId == null)
+        {
+            viewModelScope.launch {
+                runBlocking {
+                    choreRepository.addChore(
+                        ChoreInformation(
+                            name = choreUiState.name,
+                            remindAtSecondOfDay = choreUiState.hour * 3600 + choreUiState.minute * 60,
+                        )
                     )
-                )
+                }
+                val updatedChore = choreRepository.getAllChoresStream().first().lastOrNull()
+                if (updatedChore != null) {
+                    reminderRepository.updateReminder(updatedChore)
+                }
             }
-            val updatedChore = choreRepository.getChoreStreamById(choreId).first()
-            if(updatedChore != null) {
-                reminderRepository.updateReminder(updatedChore)
+        }else{
+            val choreId = this.choreId!!
+            viewModelScope.launch {
+                runBlocking {
+                    choreRepository.updateChore(
+                        ChoreInformation(
+                            id = choreId,
+                            name = choreUiState.name,
+                            remindAtSecondOfDay = choreUiState.hour * 3600 + choreUiState.minute * 60,
+                        )
+                    )
+                }
+                val updatedChore = choreRepository.getChoreStreamById(choreId).first()
+                if (updatedChore != null) {
+                    reminderRepository.updateReminder(updatedChore)
+                }
             }
         }
     }
 
     fun deleteChore(){
-        viewModelScope.launch {
-            choreRepository.removeChore(ChoreId(choreId))
+        if(this.choreId != null) {
+            val choreId = this.choreId!!
+            viewModelScope.launch {
+                choreRepository.removeChore(ChoreId(choreId))
+            }
         }
     }
 }

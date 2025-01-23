@@ -1,7 +1,6 @@
 package dev.leuchtstark.training.erledigt.ui
 
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
@@ -20,7 +19,6 @@ object AppViewModelProvider {
 
         initializer {
             EditScreenViewModel(
-                this.createSavedStateHandle(),
                 choreRepository = choreApplication().container.choreRepository,
                 reminderRepository = choreApplication().container.reminderRepository,
             )

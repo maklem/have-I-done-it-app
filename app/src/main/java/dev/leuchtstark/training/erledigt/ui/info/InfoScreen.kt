@@ -66,6 +66,15 @@ fun InfoScreenContents(
         )
         Spacer(modifier = Modifier.height(15.dp))
         Text(
+            text = stringResource(R.string.infoscreen_privacy),
+            style = MaterialTheme.typography.titleLarge,
+        )
+        Text(
+            text = stringResource(R.string.infoscreen_privacy_text),
+            style = MaterialTheme.typography.bodyLarge,
+        )
+        Spacer(modifier = Modifier.height(15.dp))
+        Text(
             text = stringResource(R.string.infoscreen_license),
             style = MaterialTheme.typography.titleLarge,
         )

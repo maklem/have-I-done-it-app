@@ -105,7 +105,7 @@ fun MissingPermissionCard(
             },
             modifier = modifier,
         ) {
-            Text(text = "add")
+            Text(text = stringResource(R.string.permissions_permit))
         }
     }
 }
