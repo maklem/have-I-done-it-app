@@ -34,4 +34,7 @@
     <string name="infoscreen_privacy">Datenschutzerklärung</string>
     <string name="infoscreen_privacy_text">Die App sammelt keine Daten. Alle Daten werden ausschließlich auf dem Gerät verarbeitet. Für weitere Informationen siehe: <a href="https://leuchtstark.dev/privacy.html">https://leuchtstark.dev/privacy.html</a></string>
     <string name="infoscreen_title">Informationen</string>
+    <string name="permissions_description">Folgende Berechtigungen sind für eine korrekte Funktion der App nötig:</string>
+    <string name="permissions_permit">Erlauben</string>
+    <string name="permissions_send_notifications">Benachrichtigungen senden</string>
 </resources>

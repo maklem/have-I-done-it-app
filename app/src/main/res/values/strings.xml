@@ -8,7 +8,6 @@
     <string name="timepicker_change_minute_format">%s minute</string>
     <string name="timepicker_change_hour_format">%s hour</string>
     <string name="homescreen_add_new_chore">add new chore</string>
-    <string name="permissions_description">For correct function this app needs permission to …</string>
     <string name="chorecard_remind_at">Reminder: %1$s</string>
     <string name="chorecard_last_time_done">Last Time Done: %1$s</string>
     <string name="chorecard_edit">edit…</string>
@@ -33,4 +32,7 @@
     <string name="infoscreen_privacy">Privacy Policy</string>
     <string name="infoscreen_privacy_text">The app does not collect data. All data is processed only on the users device. You can read more details at <a href="https://leuchtstark.dev/privacy.html">https://leuchtstark.dev/privacy.html</a></string>
     <string name="infoscreen_title">Information</string>
+    <string name="permissions_description">For correct function this app needs permission to …</string>
+    <string name="permissions_permit">allow</string>
+    <string name="permissions_send_notifications">send notifications</string>
 </resources>

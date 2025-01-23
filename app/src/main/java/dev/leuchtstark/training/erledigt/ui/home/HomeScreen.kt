@@ -34,13 +34,6 @@ import dev.leuchtstark.training.erledigt.data.ChoreId
 import dev.leuchtstark.training.erledigt.ui.AppViewModelProvider
 import dev.leuchtstark.training.erledigt.ui.theme.SimpleChoreHelperTheme
 
-val neededPermissions = listOf(
-    PermissionModel(
-        description = "send notifications",
-        identifier = "android.permission.POST_NOTIFICATIONS"
-    )
-)
-
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
@@ -129,6 +122,13 @@ fun HomeScreenContents(
     viewModel: HomeScreenViewModel = viewModel(factory = AppViewModelProvider.Factory),
 ) {
     val states = viewModel.homeUiState.collectAsState().value
+
+    val neededPermissions = listOf(
+        PermissionModel(
+            description = stringResource(R.string.permissions_send_notifications),
+            identifier = "android.permission.POST_NOTIFICATIONS"
+        )
+    )
 
     Column(
         modifier = modifier,
