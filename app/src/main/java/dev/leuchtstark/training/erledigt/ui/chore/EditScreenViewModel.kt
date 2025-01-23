@@ -3,7 +3,6 @@ package dev.leuchtstark.training.erledigt.ui.chore
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.leuchtstark.training.erledigt.data.Chore
@@ -33,7 +32,6 @@ fun Chore.toChoreUiState(): EditUiState =
 
 
 class EditScreenViewModel (
-    savedStateHandle: SavedStateHandle,
     private val choreRepository: ChoreRepository,
     private val reminderRepository: ReminderRepository,
 ) : ViewModel() {

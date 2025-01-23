@@ -9,7 +9,6 @@
     <string name="timepicker_change_minute_format">Minute %s</string>
     <string name="timepicker_change_hour_format">Stunde %s</string>
     <string name="homescreen_add_new_chore">Neue Erinnerung</string>
-    <string name="permissions_description">Folgende Berechtigungen sind für eine korrekte Funktion der App nötig:</string>
     <string name="chorecard_remind_at">Erinnern: %1$s</string>
     <string name="chorecard_last_time_done">Zuletzt erledigt: %1$s</string>
     <string name="chorecard_edit">Bearbeiten</string>

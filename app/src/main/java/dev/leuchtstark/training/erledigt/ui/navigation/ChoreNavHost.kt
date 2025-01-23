@@ -21,7 +21,7 @@ fun ChoreNavHost(
     modifier: Modifier = Modifier,
     editScreenViewModel: EditScreenViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ){
-    val newChoreName = stringResource(R.string.homescreen_new_chore_name);
+    val newChoreName = stringResource(R.string.homescreen_new_chore_name)
 
     NavHost(
         navController = navController,
