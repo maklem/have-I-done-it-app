@@ -31,6 +31,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -69,6 +71,9 @@ fun ChoreCard(
     onEdit: () -> Unit = {},
 ) {
     var expanded by remember { mutableStateOf(false) }
+
+    val description_done = stringResource(R.string.chorecard_done_description).format(name)
+    val description_edit = stringResource(R.string.chorecard_edit_description).format(name)
 
     Card (
         modifier= modifier
@@ -110,7 +115,7 @@ fun ChoreCard(
                 ) {
                     Icon(
                         imageVector = if (expanded) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
-                        contentDescription = null,
+                        contentDescription = stringResource(R.string.chorecard_expand_description).format(name),
                         modifier = Modifier.scale(2f)
                     )
                 }
@@ -123,14 +128,20 @@ fun ChoreCard(
                         modifier = Modifier.weight(1f),
                         onClick = { onEdit() },
                     ) {
-                        Text(text = stringResource(R.string.chorecard_edit))
+                        Text(
+                            text = stringResource(R.string.chorecard_edit),
+                            modifier = Modifier.semantics { this.contentDescription = description_edit },
+                        )
                     }
                     Spacer(modifier = Modifier.width(10.dp))
                     Button(
                         modifier = Modifier.weight(1f),
                         onClick = { onDoChore() }
                     ) {
-                        Text(text = stringResource(R.string.chorecard_done))
+                        Text(
+                            text = stringResource(R.string.chorecard_done),
+                            modifier = Modifier.semantics { this.contentDescription = description_done },
+                        )
                     }
                 }
             }

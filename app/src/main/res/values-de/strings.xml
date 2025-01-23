@@ -13,7 +13,10 @@
     <string name="chorecard_remind_at">Erinnern: %1$s</string>
     <string name="chorecard_last_time_done">Zuletzt erledigt: %1$s</string>
     <string name="chorecard_edit">Bearbeiten</string>
+    <string name="chorecard_edit_description">Bearbeite %s</string>
+    <string name="chorecard_expand_description">Erweitere Eintrag %s</string>
     <string name="chorecard_done">Erledigt!</string>
+    <string name="chorecard_done_description">Erledige %s</string>
     <string name="notification_channel_description">Erinnerungen an ausstehende Aufgaben</string>
     <string name="notification_action_done">Erledigt!</string>
     <string name="chorecard_never_done">noch nie</string>
@@ -28,5 +31,7 @@
     <string name="infoscreen_about_text">Diese App ist das Ergebnis eines frühen Übungsprojekts. Aktuell sind keine weiteren Entwicklungen geplant.</string>
     <string name="infoscreen_license">Lizenz</string>
     <string name="infoscreen_license_text">Die App wird in ihrem aktuellen Zustand zur Verfügung gestellt, ohne jegliche Garantien. Sie ist kostenfrei für private und komerzielle Nutzung.\nSie sind für ihre Nutzung verantwortlich, einschließlich jeder Schäden, die durch ihre Nutzung entstehen; sowie Schäden, die durch Fehler der App entstehen.</string>
+    <string name="infoscreen_privacy">Datenschutzerklärung</string>
+    <string name="infoscreen_privacy_text">Die App sammelt keine Daten. Alle Daten werden ausschließlich auf dem Gerät verarbeitet. Für weitere Informationen siehe: <a href="https://leuchtstark.dev/privacy.html">https://leuchtstark.dev/privacy.html</a></string>
     <string name="infoscreen_title">Informationen</string>
 </resources>

@@ -12,7 +12,10 @@
     <string name="chorecard_remind_at">Reminder: %1$s</string>
     <string name="chorecard_last_time_done">Last Time Done: %1$s</string>
     <string name="chorecard_edit">edit…</string>
+    <string name="chorecard_edit_description">edit chore %s</string>
+    <string name="chorecard_expand_description">expand chore %s</string>
     <string name="chorecard_done">done now</string>
+    <string name="chorecard_done_description">do chore %s</string>
     <string name="notification_channel_description">Reminders for Due Chores</string>
     <string name="notification_action_done">Done!</string>
     <string name="chorecard_never_done">Never</string>
@@ -24,8 +27,10 @@
     <string name="homescreen_about_the_app">about the app</string>
     <string name="infoscreen_back_to_main_screen">back to main screen</string>
     <string name="infoscreen_about">About</string>
-    <string name="infoscreen_about_text">The app is a result of an early training project. Currently no support or future developments are planned.</string>
+    <string name="infoscreen_about_text">The app is a result of an early training project. Currently no future developments are planned.</string>
     <string name="infoscreen_license">License</string>
     <string name="infoscreen_license_text">The app is provided as-is, without any warranty of any kind. It is free of charge for private and commercial use.\nYou are responsible for your use, including any damage caused by your use of the app, and any damages caused by failures of the app.</string>
+    <string name="infoscreen_privacy">Privacy Policy</string>
+    <string name="infoscreen_privacy_text">The app does not collect data. All data is processed only on the users device. You can read more details at <a href="https://leuchtstark.dev/privacy.html">https://leuchtstark.dev/privacy.html</a></string>
     <string name="infoscreen_title">Information</string>
 </resources>
