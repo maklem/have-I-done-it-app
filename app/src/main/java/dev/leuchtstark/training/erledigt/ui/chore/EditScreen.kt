@@ -43,7 +43,7 @@ import dev.leuchtstark.training.erledigt.ui.theme.SimpleChoreHelperTheme
 @Composable
 fun EditScreen(
     modifier: Modifier = Modifier,
-    onRequestTime: () -> Unit,
+    onRequestTime: () -> Unit = {},
     onDone: ()->Unit = {},
     viewModel: EditScreenViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
