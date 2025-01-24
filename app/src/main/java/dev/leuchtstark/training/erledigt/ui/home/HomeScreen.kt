@@ -40,6 +40,7 @@ fun HomeScreen(
     navigateToEdit: (ChoreId) -> Unit = {},
     navigateToInfo: () -> Unit = {},
     navigateToNew: () -> Unit = {},
+    viewModel: HomeScreenViewModel = viewModel(factory = AppViewModelProvider.Factory),
     ) {
     Scaffold(
         topBar = {
@@ -53,6 +54,7 @@ fun HomeScreen(
             modifier = Modifier.padding(it),
             navigateToEdit = navigateToEdit,
             navigateToNew = navigateToNew,
+            viewModel = viewModel,
         )
     }
 }
@@ -119,7 +121,7 @@ fun HomeScreenContents(
     modifier: Modifier = Modifier,
     navigateToEdit: (ChoreId) -> Unit = {},
     navigateToNew: () -> Unit = {},
-    viewModel: HomeScreenViewModel = viewModel(factory = AppViewModelProvider.Factory),
+    viewModel: HomeScreenViewModel,
 ) {
     val states = viewModel.homeUiState.collectAsState().value
 
