@@ -9,6 +9,14 @@ In case I messed up and the app crashes or stops responding, I might receive cra
 These will be used to understand and fix issues.
 Afterwards any log will be removed.
 
+
+## (Closed) App Testing
+
+I need the name of your Google Account for you to join the test.
+I will share them with Google to manage access to test-releases.
+They will not be shared with other third parties.
+
+
 ## Emails
 
 When you send me an email, I will receive
@@ -18,6 +26,7 @@ When you send me an email, I will receive
 
 I will use the information to respond, follow or decline requests, further improve my services, and protect my services.
 Unless explicitly stated otherwise, all information might be shared with third parties.
+
 
 ## Website
 
