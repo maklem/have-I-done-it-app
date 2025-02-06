@@ -5,7 +5,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import dev.leuchtstark.training.erledigt.data.ChoreInformation
+import dev.leuchtstark.training.erledigt.data.ChoreInfo
 import dev.leuchtstark.training.erledigt.data.FakeChoreDatabase
 import dev.leuchtstark.training.erledigt.data.OfflineChoreRepository
 import dev.leuchtstark.training.erledigt.ui.home.HomeScreen
@@ -27,8 +27,8 @@ class HomeScreenTest {
         val repository = OfflineChoreRepository(FakeChoreDatabase.getDatabase(appContext).choreDao())
 
         runBlocking {
-            repository.addChore(ChoreInformation(0, "Test A", 0))
-            repository.addChore(ChoreInformation(0, "Test B", 0))
+            repository.addChore(ChoreInfo(0, "Test A", 0))
+            repository.addChore(ChoreInfo(0, "Test B", 0))
         }
 
         val viewmodel = HomeScreenViewModel(repository)

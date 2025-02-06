@@ -8,18 +8,18 @@ import java.time.ZoneOffset
 
 private const val GRACE_PERIOD = 2*3600L
 
-fun Chore.nextTimeDue(): Long
+fun ChoreInformation.nextTimeDue(): Long
 {
     return this.nextTimeDueForInstant(Instant.now())
 }
 
-fun Chore.approximateNextResetTime(): Long
+fun ChoreInformation.approximateNextResetTime(): Long
 {
     return this.nextTimeDueForInstant(Instant.now()) - GRACE_PERIOD
 }
 
 @VisibleForTesting
-private fun Chore.nextTimeDueForInstant(now: Instant): Long
+private fun ChoreInformation.nextTimeDueForInstant(now: Instant): Long
 {
     val reminderTime = LocalTime.ofSecondOfDay(remindAtSecondOfDay)
     val localZone = ZoneOffset.systemDefault()
@@ -40,13 +40,13 @@ private fun Chore.nextTimeDueForInstant(now: Instant): Long
     return next.toEpochSecond(thenOffset)
 }
 
-fun Chore.isDue(): Boolean
+fun ChoreInformation.isDue(): Boolean
 {
     return this.isDueAtInstant(Instant.now())
 }
 
 @VisibleForTesting
-private fun Chore.isDueAtInstant(now: Instant): Boolean
+private fun ChoreInformation.isDueAtInstant(now: Instant): Boolean
 {
     if(lastTimeDone == null)
     {

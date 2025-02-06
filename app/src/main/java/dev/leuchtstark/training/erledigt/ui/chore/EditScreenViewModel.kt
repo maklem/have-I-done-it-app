@@ -5,9 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dev.leuchtstark.training.erledigt.data.Chore
-import dev.leuchtstark.training.erledigt.data.ChoreId
 import dev.leuchtstark.training.erledigt.data.ChoreInformation
+import dev.leuchtstark.training.erledigt.data.ChoreId
+import dev.leuchtstark.training.erledigt.data.ChoreInfo
 import dev.leuchtstark.training.erledigt.data.ChoreRepository
 import dev.leuchtstark.training.erledigt.data.ReminderRepository
 import kotlinx.coroutines.flow.filterNotNull
@@ -22,7 +22,7 @@ data class EditUiState(
     val existsInDatabase: Boolean = false,
 )
 
-fun Chore.toChoreUiState(): EditUiState =
+fun ChoreInformation.toChoreUiState(): EditUiState =
     EditUiState(
         name = name,
         hour = remindAtSecondOfDay / 3600,
@@ -72,7 +72,7 @@ class EditScreenViewModel (
             viewModelScope.launch {
                 runBlocking {
                     choreRepository.addChore(
-                        ChoreInformation(
+                        ChoreInfo(
                             name = choreUiState.name,
                             remindAtSecondOfDay = choreUiState.hour * 3600 + choreUiState.minute * 60,
                         )
@@ -88,7 +88,7 @@ class EditScreenViewModel (
             viewModelScope.launch {
                 runBlocking {
                     choreRepository.updateChore(
-                        ChoreInformation(
+                        ChoreInfo(
                             id = choreId,
                             name = choreUiState.name,
                             remindAtSecondOfDay = choreUiState.hour * 3600 + choreUiState.minute * 60,

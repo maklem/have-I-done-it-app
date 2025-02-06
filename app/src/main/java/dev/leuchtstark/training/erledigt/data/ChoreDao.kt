@@ -11,21 +11,27 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ChoreDao {
 
-    @Query("SELECT * from chore ORDER BY id ASC")
-    fun getAllChores(): Flow<List<Chore>>
+    @Query("SELECT * FROM chore ORDER BY id ASC")
+    fun getAllChores(): Flow<List<ChoreInformation>>
+
+    @Query("SELECT * FROM chore " +
+           "JOIN active_reminders ON chore.id == active_reminders.chore_id "+
+           "ORDER BY chore.id, active_reminders.day_of_week ASC")
+    fun getMappedChores(): Flow<Map<ChoreInformation,List<ActiveReminder>>>
+
 
     @Query("SELECT * from chore WHERE id = :id")
-    fun getChore(id: Int): Flow<Chore>
+    fun getChore(id: Int): Flow<ChoreInformation>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(chore: Chore)
+    suspend fun insert(chore: ChoreInformation)
 
-    @Update(entity = Chore::class)
-    suspend fun update(chore: ChoreInformation)
+    @Update(entity = ChoreInformation::class)
+    suspend fun update(chore: ChoreInfo)
 
-    @Update(entity = Chore::class)
+    @Update(entity = ChoreInformation::class)
     suspend fun update(chore: ChoreState)
 
-    @Delete(entity = Chore::class)
+    @Delete(entity = ChoreInformation::class)
     suspend fun delete(chore: ChoreId)
 }
