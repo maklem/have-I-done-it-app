@@ -2,9 +2,9 @@ package dev.leuchtstark.training.erledigt.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dev.leuchtstark.training.erledigt.data.Chore
-import dev.leuchtstark.training.erledigt.data.ChoreId
 import dev.leuchtstark.training.erledigt.data.ChoreInformation
+import dev.leuchtstark.training.erledigt.data.ChoreId
+import dev.leuchtstark.training.erledigt.data.ChoreInfo
 import dev.leuchtstark.training.erledigt.data.ChoreRepository
 import dev.leuchtstark.training.erledigt.data.approximateNextResetTime
 import dev.leuchtstark.training.erledigt.data.isDue
@@ -40,7 +40,7 @@ class HomeScreenViewModel(private val choreRepository: ChoreRepository) : ViewMo
         return "%02d:%02d".format(hour, minute)
     }
 
-    private val choreState: StateFlow<List<Chore>> =
+    private val choreState: StateFlow<List<ChoreInformation>> =
         choreRepository.getAllChoresStream().stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
@@ -64,7 +64,7 @@ class HomeScreenViewModel(private val choreRepository: ChoreRepository) : ViewMo
         }
         refreshJob = viewModelScope.launch {
             val now = Instant.now().epochSecond
-            val nextUpdateSeconds = choreState.value.map { chore: Chore ->
+            val nextUpdateSeconds = choreState.value.map { chore: ChoreInformation ->
                 chore.approximateNextResetTime() - now
             }.filter { seconds -> seconds > 0 }.minOrNull()
             if(nextUpdateSeconds != null) {
@@ -86,7 +86,7 @@ class HomeScreenViewModel(private val choreRepository: ChoreRepository) : ViewMo
     fun addChore(name: String) {
         viewModelScope.launch {
             choreRepository.addChore(
-                ChoreInformation(
+                ChoreInfo(
                     name = name,
                     remindAtSecondOfDay = 3600*7,
                 )

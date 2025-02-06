@@ -20,7 +20,7 @@ import androidx.work.WorkerParameters
 import dev.leuchtstark.training.erledigt.ChoreBroadcastReceiver
 import dev.leuchtstark.training.erledigt.INTENT_DO_CHORE_COMMAND
 import dev.leuchtstark.training.erledigt.R
-import dev.leuchtstark.training.erledigt.data.Chore
+import dev.leuchtstark.training.erledigt.data.ChoreInformation
 import dev.leuchtstark.training.erledigt.data.ChoreDatabase
 import dev.leuchtstark.training.erledigt.data.OfflineChoreRepository
 import dev.leuchtstark.training.erledigt.data.isDue
@@ -33,7 +33,7 @@ import java.util.concurrent.TimeUnit
 
 private const val TAG = "NOTIFY_WORK"
 
-fun updateMissingChoreReminders(context: Context, chores: List<Chore>)
+fun updateMissingChoreReminders(context: Context, chores: List<ChoreInformation>)
 {
     for(chore in chores)
     {
@@ -41,7 +41,7 @@ fun updateMissingChoreReminders(context: Context, chores: List<Chore>)
     }
 }
 
-fun updateChoreReminder(context: Context, chore: Chore, policy: ExistingWorkPolicy = ExistingWorkPolicy.REPLACE){
+fun updateChoreReminder(context: Context, chore: ChoreInformation, policy: ExistingWorkPolicy = ExistingWorkPolicy.REPLACE){
     val now = Instant.now()
     val delay = chore.nextTimeDue() - now.epochSecond
 

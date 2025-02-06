@@ -4,17 +4,17 @@ import kotlinx.coroutines.flow.Flow
 import java.time.Instant
 
 class OfflineChoreRepository(private val choreDao: ChoreDao) : ChoreRepository {
-    override fun getAllChoresStream(): Flow<List<Chore>> {
+    override fun getAllChoresStream(): Flow<List<ChoreInformation>> {
         return choreDao.getAllChores()
     }
 
-    override fun getChoreStreamById(id: Int): Flow<Chore?> {
+    override fun getChoreStreamById(id: Int): Flow<ChoreInformation?> {
         return choreDao.getChore(id)
     }
 
-    override suspend fun addChore(chore: ChoreInformation) {
+    override suspend fun addChore(chore: ChoreInfo) {
         choreDao.insert(
-            Chore(
+            ChoreInformation(
             id = chore.id,
             name = chore.name,
             remindAtSecondOfDay = chore.remindAtSecondOfDay,
@@ -23,7 +23,7 @@ class OfflineChoreRepository(private val choreDao: ChoreDao) : ChoreRepository {
         )
     }
 
-    override suspend fun updateChore(chore: ChoreInformation) {
+    override suspend fun updateChore(chore: ChoreInfo) {
         choreDao.update(chore)
     }
 

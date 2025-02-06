@@ -9,7 +9,7 @@ import androidx.compose.ui.test.performTextReplacement
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import dev.leuchtstark.training.erledigt.data.ChoreId
-import dev.leuchtstark.training.erledigt.data.ChoreInformation
+import dev.leuchtstark.training.erledigt.data.ChoreInfo
 import dev.leuchtstark.training.erledigt.data.FakeChoreDatabase
 import dev.leuchtstark.training.erledigt.data.FakeReminderRepository
 import dev.leuchtstark.training.erledigt.data.OfflineChoreRepository
@@ -34,8 +34,8 @@ class EditScreenTest {
         val choreRepository = OfflineChoreRepository(FakeChoreDatabase.getDatabase(appContext).choreDao())
 
         runBlocking {
-            choreRepository.addChore(ChoreInformation(0, "Test A", 0))
-            choreRepository.addChore(ChoreInformation(0, "Test B", 0))
+            choreRepository.addChore(ChoreInfo(0, "Test A", 0))
+            choreRepository.addChore(ChoreInfo(0, "Test B", 0))
         }
         val reminderRepository = FakeReminderRepository()
 
@@ -84,7 +84,7 @@ class EditScreenTest {
         val newTestChoreName = "newTestChoreName"
         var choreIdInDatabase: Int
         runBlocking {
-            choreRepository.addChore(ChoreInformation(0, name = oldTestChoreName, 0))
+            choreRepository.addChore(ChoreInfo(0, name = oldTestChoreName, 0))
 
              choreIdInDatabase = choreRepository.getAllChoresStream().first().first().id
         }

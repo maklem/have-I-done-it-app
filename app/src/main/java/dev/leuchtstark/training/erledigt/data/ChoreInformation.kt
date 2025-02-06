@@ -1,11 +1,11 @@
 package dev.leuchtstark.training.erledigt.data
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.ColumnInfo
 
 @Entity(tableName = "chore")
-data class Chore(
+data class ChoreInformation(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
 
@@ -20,7 +20,7 @@ data class Chore(
 )
 
 @Entity
-data class ChoreInformation(
+data class ChoreInfo(
     val id: Int = 0,
     val name: String,
 
