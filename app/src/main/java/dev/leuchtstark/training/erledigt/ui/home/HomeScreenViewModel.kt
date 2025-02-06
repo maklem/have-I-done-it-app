@@ -2,9 +2,8 @@ package dev.leuchtstark.training.erledigt.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dev.leuchtstark.training.erledigt.data.ChoreInformation
 import dev.leuchtstark.training.erledigt.data.ChoreId
-import dev.leuchtstark.training.erledigt.data.ChoreInfo
+import dev.leuchtstark.training.erledigt.data.ChoreInformation
 import dev.leuchtstark.training.erledigt.data.ChoreRepository
 import dev.leuchtstark.training.erledigt.data.approximateNextResetTime
 import dev.leuchtstark.training.erledigt.data.isDue
@@ -79,18 +78,6 @@ class HomeScreenViewModel(private val choreRepository: ChoreRepository) : ViewMo
             choreState.collectLatest {
                 evaluateNewUiState()
             }
-        }
-    }
-
-
-    fun addChore(name: String) {
-        viewModelScope.launch {
-            choreRepository.addChore(
-                ChoreInfo(
-                    name = name,
-                    remindAtSecondOfDay = 3600*7,
-                )
-            )
         }
     }
 
